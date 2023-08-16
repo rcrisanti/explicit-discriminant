@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/ci.yml
 
   publish:
-
+    needs: ci
     runs-on: ubuntu-latest
 
     steps:
@@ -26,42 +26,46 @@ jobs:
         toolchain: stable
         override: true
 
-    - name: login to crates.io
-      run: cargo login ${{ secrets.CRATESIO_API_TOKEN }}
-
     - name: cargo publish
-      uses: actions-rs/cargo@v1
-      with:
-        command: publish
+      run: cargo publish --token ${{ secrets.CRATESIO_API_TOKEN }} 
 
-  # versionnum:
-  #   runs-on: ubuntu-latest
+  versionnum:
+    runs-on: ubuntu-latest
 
-  #   outputs:
-  #     version_number: ${{ steps.getvers.outputs.version }}
+    outputs:
+      version_number: ${{ steps.getvers.outputs.version }}
     
-  #   steps:
-  #   - name: Checkout sources
-  #     uses: actions/checkout@v3
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v3
 
-  #   - id: getvers
-  #     name: Get version number from Cargo manifest
-  #     run: |
-  #       version=$( cargo read-manifest | jq '.version' )
-  #       echo "version=$version" >> "$GITHUB_OUTPUT"
+    - id: getvers
+      name: Get version number from Cargo manifest
+      run: |
+        version=$( cargo read-manifest | jq '.version' )
+        echo "version=$version" >> "$GITHUB_OUTPUT"
 
-  # release:
-  #   needs: versionnum
-  #   runs-on: ubuntu-latest
+  release:
+    needs: versionnum
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - name: Checkout sources
-  #     uses: actions/checkout@v3
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v3
 
-  #   - name: Create tag
-  #     uses: EndBug/latest-tag@latest
-  #     with:
-  #       ref: v${{ needs.versionnum.outputs.version }}
+    - name: Create tag
+      uses: EndBug/latest-tag@latest
+      with:
+        ref: v${{ needs.versionnum.outputs.version }}
       
-  #   - name: Create release
-  #     run: gh release create v${{ needs.versionnum.outputs.version }} -F CHANGELOG.md --target release
+    # - name: Create release
+    #   run: gh release create v${{ needs.versionnum.outputs.version }} -F CHANGELOG.md --target release
+    
+    - name: merge release -> main
+      uses: devmasx/merge-branch@master
+      with:
+        type: now
+        from_branch: release
+        target_branch: main
+        message: Merging v${{ needs.versionnum.outputs.version }} release
+        github_token: ${{ secrets.GITHUB_TOKEN }}
