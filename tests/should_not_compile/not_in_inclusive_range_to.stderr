@@ -1,0 +1,5 @@
+error: discriminant does not match any pattern
+  --> tests/should_not_compile/not_in_inclusive_range_to.rs:10:12
+   |
+10 |     Four = 4,
+   |            ^

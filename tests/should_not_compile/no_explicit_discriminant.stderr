@@ -1,0 +1,5 @@
+error: no explicit discriminant
+ --> tests/should_not_compile/no_explicit_discriminant.rs:7:5
+  |
+7 |     Three,
+  |     ^^^^^

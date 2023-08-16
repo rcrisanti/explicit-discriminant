@@ -1,0 +1,5 @@
+error: discriminant does not match any pattern
+ --> tests/should_not_compile/not_in_range_to.rs:9:13
+  |
+9 |     Three = 3,
+  |             ^

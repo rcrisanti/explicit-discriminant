@@ -1,0 +1,11 @@
+error: discriminant does not match any pattern
+ --> tests/should_not_compile/not_in_range.rs:6:12
+  |
+6 |     Zero = 0,
+  |            ^
+
+error: discriminant does not match any pattern
+ --> tests/should_not_compile/not_in_range.rs:9:13
+  |
+9 |     Three = 3,
+  |             ^
