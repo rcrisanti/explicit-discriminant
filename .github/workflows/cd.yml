@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/ci.yml
 
   publish:
-
+    needs: ci
     runs-on: ubuntu-latest
 
     steps:
@@ -26,13 +26,8 @@ jobs:
         toolchain: stable
         override: true
 
-    - name: login to crates.io
-      run: cargo login ${{ secrets.CRATESIO_API_TOKEN }}
-
     - name: cargo publish
-      uses: actions-rs/cargo@v1
-      with:
-        command: publish
+      run: cargo publish --token ${{ secrets.CRATESIO_API_TOKEN }} 
 
   # versionnum:
   #   runs-on: ubuntu-latest
