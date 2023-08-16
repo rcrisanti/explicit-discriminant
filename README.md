@@ -1,6 +1,7 @@
 # explicit-discriminant
 
 ![CI](https://github.com/rcrisanti/explicit-discriminant/actions/workflows/ci.yml/badge.svg)
+![CD](https://github.com/rcrisanti/explicit-discriminant/actions/workflows/cd.yml/badge.svg)
 
 This crate enforces explicit discriminants of an enum.
 
