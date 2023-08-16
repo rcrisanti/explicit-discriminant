@@ -1,0 +1,5 @@
+error: discriminant does not match any pattern
+ --> tests/should_not_compile/not_literal.rs:6:12
+  |
+6 |     Zero = 0,
+  |            ^

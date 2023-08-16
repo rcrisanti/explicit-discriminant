@@ -1,0 +1,17 @@
+error: discriminant does not match any pattern
+  --> tests/should_not_compile/not_in_many_patterns_mixed_attr.rs:10:12
+   |
+10 |     Zero = 0,
+   |            ^
+
+error: discriminant does not match any pattern
+  --> tests/should_not_compile/not_in_many_patterns_mixed_attr.rs:12:12
+   |
+12 |     Five = 5,
+   |            ^
+
+error: discriminant does not match any pattern
+  --> tests/should_not_compile/not_in_many_patterns_mixed_attr.rs:21:16
+   |
+21 |     Eighteen = 18,
+   |                ^^
