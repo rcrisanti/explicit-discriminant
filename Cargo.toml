@@ -1,6 +1,6 @@
 [package]
 name = "explicit-discriminant"
-version = "0.1.2"
+version = "0.1.1"
 edition = "2021"
 authors = ["Ryan Crisanti <rcrisanti@me.com>"]
 description = "Macro for enforcing enum discriminants"
