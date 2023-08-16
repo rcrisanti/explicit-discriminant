@@ -126,51 +126,6 @@ fn tok_matches(expr: &Expr, pat: &Pat) -> bool {
 }
 
 fn expr_as_int(expr: &Expr) -> i128 {
-    // println!(
-    //     "{}",
-    //     match expr {
-    //         Expr::Array(_) => "array",
-    //         Expr::Assign(_) => "assign",
-    //         Expr::Async(_) => "async",
-    //         Expr::Await(_) => "awai",
-    //         Expr::Binary(_) => "binary",
-    //         Expr::Block(_) => "block",
-    //         Expr::Break(_) => "break",
-    //         Expr::Call(_) => "call",
-    //         Expr::Cast(_) => "cast",
-    //         Expr::Closure(_) => "closure",
-    //         Expr::Const(_) => "const",
-    //         Expr::Continue(_) => "contonue",
-    //         Expr::Field(_) => "field",
-    //         Expr::ForLoop(_) => "for loop",
-    //         Expr::Group(_) => "group",
-    //         Expr::If(_) => "if",
-    //         Expr::Index(_) => "index",
-    //         Expr::Infer(_) => "infer",
-    //         Expr::Let(_) => "let",
-    //         Expr::Lit(_) => "lit",
-    //         Expr::Loop(_) => "loop",
-    //         Expr::Macro(_) => "macro",
-    //         Expr::Match(_) => "match",
-    //         Expr::MethodCall(_) => "method cll",
-    //         Expr::Paren(_) => "paren",
-    //         Expr::Path(_) => "path",
-    //         Expr::Range(_) => "range",
-    //         Expr::Reference(_) => "reference",
-    //         Expr::Repeat(_) => "repeat",
-    //         Expr::Return(_) => "return",
-    //         Expr::Struct(_) => "struct",
-    //         Expr::Try(_) => "try",
-    //         Expr::TryBlock(_) => "try block",
-    //         Expr::Tuple(_) => "tuple",
-    //         Expr::Unary(_) => "unary",
-    //         Expr::Unsafe(_) => "unsafe",
-    //         Expr::Verbatim(_) => "verbatim",
-    //         Expr::While(_) => "while",
-    //         Expr::Yield(_) => "yield",
-    //         _ => "other",
-    //     }
-    // );
     match expr {
         Expr::Lit(lit) => exprlit_as_int(lit),
         Expr::Unary(ExprUnary {
