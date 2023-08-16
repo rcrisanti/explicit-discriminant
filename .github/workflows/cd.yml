@@ -3,8 +3,6 @@ name: CD
 on:
   push:
     branches: [ "release" ]
-  pull_request:
-    branches: [ "release" ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -32,3 +30,35 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: publish
+
+  versionnum:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version_number: ${{ steps.getvers.outputs.version }}
+    
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v3
+
+    - id: getvers
+      name: Get version number from Cargo manifest
+      run: |
+        version=$( cargo read-manifest | jq '.version' )
+        echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: versionnum
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v3
+
+    - name: Create tag
+      uses: EndBug/latest-tag@latest
+      with:
+        ref: v${{ needs.versionnum.outputs.version }}
+      
+    - name: Create release
+      run: gh release create v${{ needs.versionnum.outputs.version }} -F CHANGELOG.md --target release
