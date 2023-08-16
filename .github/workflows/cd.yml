@@ -76,7 +76,7 @@ jobs:
 
     - name: create PR to merge back to main
       uses: peter-evans/create-pull-request@v5
-      branch: published/${{needs.versionnum.outputs.version}}
+      branch: "published/${{ needs.versionnum.outputs.version }}"
       delete-branch: true
       base: main
       title: Update with release v${{ needs.versionnum.outputs.version }}
