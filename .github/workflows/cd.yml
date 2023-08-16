@@ -51,6 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
 
     steps:
     - name: Checkout sources
@@ -64,11 +65,20 @@ jobs:
     # - name: Create release
     #   run: gh release create v${{ needs.versionnum.outputs.version }} -F CHANGELOG.md --target release
     
-    - name: merge release -> main
-      uses: devmasx/merge-branch@master
-      with:
-        type: now
-        from_branch: release
-        target_branch: main
-        message: Merging v${{ needs.versionnum.outputs.version }} release
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+    # - name: merge release -> main
+    #   uses: devmasx/merge-branch@master
+    #   with:
+    #     type: now
+    #     from_branch: release
+    #     target_branch: main
+    #     message: Merging v${{ needs.versionnum.outputs.version }} release
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: create PR to merge back to main
+      uses: peter-evans/create-pull-request@v5
+      branch: published/${{needs.versionnum.outputs.version}}
+      delete-branch: true
+      base: main
+      title: Update with release v${{ needs.versionnum.outputs.version }}
+      body: v${{ needs.versionnum.outputs.version }} has been successfully released. This incorporates the changes back into main.
+      assignees: rcrisanti
