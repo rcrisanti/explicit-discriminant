@@ -30,7 +30,7 @@ jobs:
       run: cargo publish --token ${{ secrets.CRATESIO_API_TOKEN }}
 
   versionnum:
-    needs: ci
+    needs: publish
     runs-on: ubuntu-latest
 
     outputs:
@@ -49,6 +49,8 @@ jobs:
   release:
     needs: versionnum
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout sources
